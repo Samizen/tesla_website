@@ -993,11 +993,19 @@ main {
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
 }
 
-.image-zoom img {
+.image-zoom-frame {
+  overflow: auto;
+  max-height: 78vh;
+  background: #f8fdff;
+}
+
+.image-zoom-frame img {
   display: block;
   width: 100%;
-  max-height: 78vh;
+  height: auto;
   object-fit: contain;
+  transform-origin: center center;
+  transition: transform 180ms ease;
 }
 
 .image-zoom figcaption {
@@ -1021,6 +1029,48 @@ main {
   font-weight: 800;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+.image-zoom-controls {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: white;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.24);
+  transform: translateX(-50%);
+}
+
+.image-zoom-controls button,
+.image-zoom-controls span {
+  min-width: 38px;
+  border: 0;
+  padding: 8px 10px;
+  background: var(--ink);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+}
+
+.image-zoom-controls button {
+  cursor: pointer;
+}
+
+.image-zoom-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.image-zoom-controls span {
+  min-width: 58px;
+  background: var(--ice);
+  color: var(--ink);
 }
 
 .contact {
@@ -1474,6 +1524,14 @@ main {
   .image-zoom-close {
     top: 12px;
     right: 12px;
+  }
+
+  .image-zoom-controls {
+    top: auto;
+    bottom: 12px;
+    max-width: calc(100vw - 24px);
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .footer {

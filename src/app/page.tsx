@@ -162,6 +162,7 @@ export default function Home() {
   const [hasUsedProcess, setHasUsedProcess] = useState(false);
   const [activeOfferSlide, setActiveOfferSlide] = useState(0);
   const [zoomedOfferSlide, setZoomedOfferSlide] = useState<number | null>(null);
+  const [zoomScale, setZoomScale] = useState(1);
   const gearShellRef = useRef<HTMLDivElement>(null);
   const gearWheelLockRef = useRef(false);
   const gearWheelDeltaRef = useRef(0);
@@ -185,6 +186,21 @@ export default function Home() {
 
   function showNextOfferSlide() {
     setActiveOfferSlide((current) => (current + 1) % offerSlides.length);
+  }
+
+  function openZoomedOfferSlide(index: number) {
+    setActiveOfferSlide(index);
+    setZoomScale(1);
+    setZoomedOfferSlide(index);
+  }
+
+  function closeZoomedOfferSlide() {
+    setZoomedOfferSlide(null);
+    setZoomScale(1);
+  }
+
+  function changeZoomScale(amount: number) {
+    setZoomScale((current) => Math.min(3, Math.max(1, Number((current + amount).toFixed(1)))));
   }
 
   useEffect(() => {
@@ -501,10 +517,7 @@ export default function Home() {
                   className={`offer-slide ${position}`}
                   key={slide.caption}
                   type="button"
-                  onClick={() => {
-                    setActiveOfferSlide(index);
-                    setZoomedOfferSlide(index);
-                  }}
+                  onClick={() => openZoomedOfferSlide(index)}
                   aria-label={`Zoom image: ${slide.caption}`}
                 >
                   <Image src={slide.image} alt={slide.caption} />
@@ -543,19 +556,37 @@ export default function Home() {
           <button
             className="image-zoom-close"
             type="button"
-            onClick={() => setZoomedOfferSlide(null)}
+            onClick={closeZoomedOfferSlide}
             aria-label="Close zoomed image"
           >
             Close
           </button>
+          <div className="image-zoom-controls" aria-label="Image zoom controls">
+            <button type="button" onClick={() => changeZoomScale(-0.25)} disabled={zoomScale <= 1}>
+              -
+            </button>
+            <span>{Math.round(zoomScale * 100)}%</span>
+            <button type="button" onClick={() => changeZoomScale(0.25)} disabled={zoomScale >= 3}>
+              +
+            </button>
+            <button type="button" onClick={() => setZoomScale(1)} disabled={zoomScale === 1}>
+              Reset
+            </button>
+          </div>
           <button
             className="image-zoom-backdrop"
             type="button"
-            onClick={() => setZoomedOfferSlide(null)}
+            onClick={closeZoomedOfferSlide}
             aria-label="Close zoomed image"
           />
           <figure>
-            <Image src={zoomedSlide.image} alt={zoomedSlide.caption} />
+            <div className="image-zoom-frame">
+              <Image
+                src={zoomedSlide.image}
+                alt={zoomedSlide.caption}
+                style={{ transform: `scale(${zoomScale})` }}
+              />
+            </div>
             <figcaption>{zoomedSlide.caption}</figcaption>
           </figure>
         </div>
