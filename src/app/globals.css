@@ -1318,19 +1318,39 @@ main {
   .site-header {
     position: sticky;
     grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 10px 18px;
+    height: auto;
+    gap: 8px;
+    padding: 10px 12px 12px;
   }
 
   .brand {
-    width: 118px;
+    width: 112px;
   }
 
   .site-header nav {
     justify-content: start;
-    gap: 18px;
-    overflow-x: auto;
-    font-size: 13px;
+    width: 100%;
+    gap: 16px;
+    overflow-x: hidden;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .search {
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+
+  .search button {
+    flex: 0 0 42px;
+    width: 42px;
+  }
+
+  .search-results {
+    right: 0;
+    left: 0;
+    width: 100%;
   }
 
   .hero {
