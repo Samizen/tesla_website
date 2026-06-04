@@ -10,7 +10,7 @@
   --ice-strong: #d7f2fc;
   --shadow: 0 18px 50px rgba(8, 63, 97, 0.16);
   --header-height: clamp(84px, 5.6vw, 108px);
-  --hero-followup-height: clamp(280px, 25vh, 345px);
+  --hero-followup-height: clamp(390px, 30vh, 455px);
   --section-y: clamp(54px, 6.8vw, 96px);
   --section-x: clamp(22px, 7vw, 120px);
 }
