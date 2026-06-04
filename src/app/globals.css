@@ -359,14 +359,16 @@ main {
 }
 
 .stats div {
-  min-height: clamp(120px, 10.8vw, 160px);
+  min-height: clamp(132px, 10vw, 170px);
   display: grid;
   place-items: center;
   align-content: center;
   gap: 4px;
+  padding: clamp(18px, 1.6vw, 26px) 12px;
   border-right: 0;
   background: var(--ice);
   text-align: center;
+  overflow: visible;
 }
 
 .stats div:last-child {
@@ -374,9 +376,10 @@ main {
 }
 
 .stats strong {
-  font-size: clamp(36px, 4.2vw, 72px);
+  display: block;
+  font-size: clamp(36px, 3.8vw, 66px);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.08;
 }
 
 .stats span {
