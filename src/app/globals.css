@@ -359,12 +359,14 @@ main {
 }
 
 .stats div {
-  min-height: clamp(132px, 10vw, 170px);
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 4px;
-  padding: clamp(18px, 1.6vw, 26px) 12px;
+  min-height: 0;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: clamp(30px, 2.3vw, 44px) 12px;
   border-right: 0;
   background: var(--ice);
   text-align: center;
@@ -379,7 +381,7 @@ main {
   display: block;
   font-size: clamp(36px, 3.8vw, 66px);
   font-weight: 800;
-  line-height: 1.08;
+  line-height: 1.22;
 }
 
 .stats span {
@@ -1446,7 +1448,8 @@ main {
   }
 
   .stats div {
-    min-height: 150px;
+    min-height: 0;
+    padding: 42px 12px;
     border-right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
@@ -1460,13 +1463,13 @@ main {
   }
 
   .gear-shell {
-    width: min(380px, 90vw);
+    width: min(320px, 74vw);
   }
 
   .gear-number {
-    width: 32px;
-    height: 32px;
-    font-size: 25px;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
   }
 
   .gear-hole,
