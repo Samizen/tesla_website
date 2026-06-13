@@ -375,6 +375,14 @@ export default function Home() {
           <h2>Our Process</h2>
           <p>Once We Establish Connection.</p>
         </div>
+        <div className="process-flow" aria-label="Process overview">
+          {processSteps.map((step) => (
+            <article key={step.title} className={selectedProcess.title === step.title ? "active" : ""}>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </article>
+          ))}
+        </div>
         <div className="gear-stage">
           <div
             ref={gearShellRef}
