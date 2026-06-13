@@ -5,6 +5,7 @@ import type { FormEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroBg from "../../assets/landing_page_background_image.jpg";
 import processFlowBg from "../../assets/process_flow_bg.svg";
+import whoBg from "../../assets/who_we_are_bg.png";
 import contactIllustration from "../../assets/contact_us_illustration.png";
 import logo from "../../assets/logos/Tesla_horizontal_svg.svg";
 import gear from "../../assets/tesla_gear.svg";
@@ -426,33 +427,35 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="about"
-        className="who section-pad"
-        data-search
-      >
-        <h2>Who We Are?</h2>
-        <div className="who-grid">
-          {whoCards.map((card) => (
-            <article key={card.title}>
-              <h3>{card.title}</h3>
-              <p>{card.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <div className="about-band" style={{ backgroundImage: `url(${whoBg.src})` }}>
+        <section
+          id="about"
+          className="who section-pad"
+          data-search
+        >
+          <h2>Who We Are?</h2>
+          <div className="who-grid">
+            {whoCards.map((card) => (
+              <article key={card.title}>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      <section id="choose" className="choose section-pad" data-search>
-        <h2>Why Choose Us?</h2>
-        <div className="choose-grid">
-          {chooseCards.map((card) => (
-            <article key={card.title}>
-              <h3>{card.title}</h3>
-              <p>{card.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+        <section id="choose" className="choose section-pad" data-search>
+          <h2>Why Choose Us?</h2>
+          <div className="choose-grid">
+            {chooseCards.map((card) => (
+              <article key={card.title}>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
 
       <section id="offer" className="offer section-pad" data-search>
         <h2>What We Offer?</h2>
