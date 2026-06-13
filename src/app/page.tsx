@@ -13,6 +13,7 @@ import footerTelegramIcon from "../../assets/footer_telegram_icon.svg";
 import footerWhatsappIcon from "../../assets/footer_whatsapp_icon.svg";
 import clickIcon from "../../assets/click_icon.svg";
 import { offerServices } from "./offer-data";
+import { getSearchResults, searchItems, type SearchItem } from "./search-data";
 
 const services = [
   {
@@ -97,51 +98,6 @@ const offerSlides = offerServices.map((service) => ({
 
 const gearNumberAngles = [-90, -45, 0, 45, 90, 135];
 
-const searchItems = [
-  {
-    id: "home",
-    title: "Remote Structural Engineers",
-    snippet: "Remote structural engineering support, consultation, and project collaboration.",
-    terms: "home remote structural engineers consultation solutions together anywhere",
-  },
-  {
-    id: "services",
-    title: "Services",
-    snippet: "Structural calculations, analysis, shop drawing review, and drafting support.",
-    terms: "services structural calculations analysis drafting shop drawing review bim wood steel concrete",
-  },
-  {
-    id: "process",
-    title: "Our Process",
-    snippet: "Project intake, kickoff, quotation, execution, revisions, and completion.",
-    terms: "process project intake kickoff meeting quotation execution revision completion timeline",
-  },
-  {
-    id: "about",
-    title: "Who We Are",
-    snippet: "Professional, dedicated, and experienced structural engineering team.",
-    terms: "about who we are professional dedicated experienced kathmandu nepal team",
-  },
-  {
-    id: "choose",
-    title: "Why Choose Us",
-    snippet: "Delegate repetitive engineering tasks and improve productivity.",
-    terms: "why choose us delegate prolific competitive productivity cost saved outsource",
-  },
-  {
-    id: "offer",
-    title: "What We Offer",
-    snippet: "Lateral analysis, podiums, tilt-up concrete, braced frames, and connection design.",
-    terms: "offer lateral gravity etabs safe foundation mathcad calculations brb scbf connection design",
-  },
-  {
-    id: "contact",
-    title: "Contact Us",
-    snippet: "Send a free consultation request by email.",
-    terms: "contact email consultation query message info sojha whatsapp telegram",
-  },
-];
-
 export default function Home() {
   const [query, setQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -159,14 +115,7 @@ export default function Home() {
   const rotation = useMemo(() => selectedStep * -45, [selectedStep]);
   const counterRotation = useMemo(() => selectedStep * 45, [selectedStep]);
   const zoomedSlide = zoomedOfferSlide === null ? null : offerSlides[zoomedOfferSlide];
-  const searchResults = useMemo(() => {
-    const needle = query.trim().toLowerCase();
-    if (!needle) return [];
-
-    return searchItems
-      .filter((item) => `${item.title} ${item.snippet} ${item.terms}`.toLowerCase().includes(needle))
-      .slice(0, 5);
-  }, [query]);
+  const searchResults = useMemo(() => getSearchResults(query), [query]);
 
   function showPreviousOfferSlide() {
     setActiveOfferSlide((current) => (current - 1 + offerSlides.length) % offerSlides.length);
@@ -252,7 +201,13 @@ export default function Home() {
     };
   }, []);
 
-  function scrollToSearchItem(id: string) {
+  function scrollToSearchItem(item: SearchItem) {
+    if (!item.href.startsWith("/#")) {
+      window.location.href = item.href;
+      return;
+    }
+
+    const id = item.href.slice(2);
     document.querySelectorAll(".search-hit").forEach((node) => node.classList.remove("search-hit"));
     window.getSelection()?.removeAllRanges();
 
@@ -271,7 +226,7 @@ export default function Home() {
   function runSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const target = searchResults[0] || searchItems[0];
-    scrollToSearchItem(target.id);
+    scrollToSearchItem(target);
   }
 
   function submitContact(event: FormEvent<HTMLFormElement>) {
@@ -313,7 +268,7 @@ export default function Home() {
             aria-controls="search-results"
           />
           <button type="submit" aria-label="Search page">
-            <span>⌕</span>
+            <span>Go</span>
           </button>
           {isSearchOpen && query.trim().length > 0 && (
             <div className="search-results" id="search-results">
@@ -323,7 +278,7 @@ export default function Home() {
                     key={item.id}
                     type="button"
                     onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => scrollToSearchItem(item.id)}
+                    onClick={() => scrollToSearchItem(item)}
                   >
                     <strong>{item.title}</strong>
                     <span>{item.snippet}</span>

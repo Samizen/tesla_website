@@ -10,9 +10,11 @@ import footerWhatsappIcon from "../../../assets/footer_whatsapp_icon.svg";
 import contactIllustration from "../../../assets/contact_us_illustration.png";
 import heroImage from "../../../assets/what_we_offer_hero.png";
 import { offerServices } from "../offer-data";
+import { getSearchResults, searchItems, type SearchItem } from "../search-data";
 
 export default function WhatWeOfferPage() {
   const [query, setQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeImages, setActiveImages] = useState<Record<string, number>>({});
 
   const filteredServices = useMemo(() => {
@@ -23,6 +25,8 @@ export default function WhatWeOfferPage() {
       `${service.title} ${service.body} ${service.tags.join(" ")}`.toLowerCase().includes(needle),
     );
   }, [query]);
+
+  const searchResults = useMemo(() => getSearchResults(query), [query]);
 
   function submitContact(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -36,11 +40,39 @@ export default function WhatWeOfferPage() {
     window.location.href = `mailto:info@teslaengineering.com.np?subject=${subject}&body=${body}`;
   }
 
+  function scrollToSearchItem(item: SearchItem) {
+    const currentPath = window.location.pathname;
+
+    if (item.href.startsWith("/#") || !item.href.startsWith("/what-we-offer")) {
+      window.location.href = item.href;
+      return;
+    }
+
+    if (currentPath !== "/what-we-offer") {
+      window.location.href = item.href;
+      return;
+    }
+
+    const hash = item.href.split("#")[1];
+    const match = hash ? document.getElementById(hash) : document.querySelector(".offer-page-hero");
+
+    document.querySelectorAll(".search-hit").forEach((node) => node.classList.remove("search-hit"));
+    window.getSelection()?.removeAllRanges();
+
+    if (match instanceof HTMLElement) {
+      match.classList.add("search-hit");
+      const rect = match.getBoundingClientRect();
+      const top = rect.top + window.scrollY - window.innerHeight * 0.18;
+      window.scrollTo({ top, behavior: "smooth" });
+      setIsSearchOpen(false);
+      window.setTimeout(() => match.classList.remove("search-hit"), 2200);
+    }
+  }
+
   function runSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const target = filteredServices[0];
-    if (!target) return;
-    document.getElementById(target.id)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const target = searchResults[0] || searchItems.find((item) => item.href === "/what-we-offer") || searchItems[0];
+    scrollToSearchItem(target);
   }
 
   function moveImage(serviceId: string, count: number, direction: number) {
@@ -66,13 +98,39 @@ export default function WhatWeOfferPage() {
           <input
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setIsSearchOpen(true);
+            }}
+            onFocus={() => setIsSearchOpen(true)}
+            onBlur={() => window.setTimeout(() => setIsSearchOpen(false), 140)}
             placeholder="Search"
             aria-label="Find content on this page"
+            aria-expanded={isSearchOpen && query.trim().length > 0}
+            aria-controls="offer-search-results"
           />
           <button type="submit" aria-label="Search page">
             <span>Go</span>
           </button>
+          {isSearchOpen && query.trim().length > 0 && (
+            <div className="search-results" id="offer-search-results">
+              {searchResults.length > 0 ? (
+                searchResults.map((item) => (
+                  <button
+                    key={item.href}
+                    type="button"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => scrollToSearchItem(item)}
+                  >
+                    <strong>{item.title}</strong>
+                    <span>{item.snippet}</span>
+                  </button>
+                ))
+              ) : (
+                <p>No matching section</p>
+              )}
+            </div>
+          )}
         </form>
       </header>
 
