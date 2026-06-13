@@ -532,6 +532,9 @@ export default function Home() {
             </button>
           </div>
         </div>
+        <div className="offer-carousel-caption" aria-live="polite">
+          {offerSlides[activeOfferSlide].caption}
+        </div>
         <p>
           Although we have the capability to handle a wide range of projects, there are several areas where our team has expertise which we would like to highlight. We support teams with <strong>concrete podiums, wood residential and commercial units, steel structures, non-structural components, seismic retrofitting, construction administration, reinforced concrete block masonry, and structural drafting.</strong> You can trust that our team has the knowledge and experience necessary to deliver outstanding results that meet your specific needs.
         </p>
