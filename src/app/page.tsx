@@ -305,6 +305,7 @@ export default function Home() {
         </a>
         <nav aria-label="Primary navigation">
           <a className={activeSection === "home" ? "active" : ""} href="#home">Home</a>
+          <a href="/what-we-offer">What We Offer</a>
           <a className={activeSection === "about" ? "active" : ""} href="#about">About Us</a>
           <a className={activeSection === "contact" ? "active" : ""} href="#contact">Contact</a>
         </nav>
