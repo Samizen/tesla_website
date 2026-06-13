@@ -25,6 +25,7 @@ export type OfferService = {
   body: string;
   tags: string[];
   images: StaticImageData[];
+  imageFit?: "cover" | "contain";
 };
 
 export const offerServices: OfferService[] = [
@@ -55,6 +56,7 @@ export const offerServices: OfferService[] = [
     body: "Ensuring the seismic anchoring and bracing of electrical and mechanical equipment is critical for life-safety compliance. We provide anchorage calculations, bracing design, and coordination for HVAC units, electrical panels, piping, conduit, and other non-structural components per ASCE 7 and CBC requirements.",
     tags: ["HVAC Anchorage", "Electrical Panel Bracing", "ASCE 7 Chapter 13", "Seismic Anchorage", "MEP Coordination"],
     images: [carouselTwo, steelTwo, carouselOne],
+    imageFit: "contain",
   },
   {
     id: "seismic-retrofitting",
@@ -69,6 +71,7 @@ export const offerServices: OfferService[] = [
     body: "We support project teams throughout the construction administration phase, managing Submittals and Requests for Information (RFIs) with speed and precision. Our engineers review shop drawings, respond to field questions, issue supplemental instructions, and track documentation - keeping projects moving and protecting structural intent on-site.",
     tags: ["Submittal Review", "RFI Response", "Shop Drawing Review", "Field Support", "Construction Admin"],
     images: [concreteFive, carouselTwo, carouselThree],
+    imageFit: "contain",
   },
   {
     id: "reinforced-concrete-block-masonry",
@@ -83,6 +86,6 @@ export const offerServices: OfferService[] = [
     body: "Our drafting team produces high-quality structural drawings using BIM platforms and markup-based workflows. We create coordinated structural models in Revit, produce construction document sets, and perform markup-based drafting for plan check corrections and addenda. Deliverables are precise, buildable, and fully coordinated with architectural and MEP disciplines.",
     tags: ["Revit BIM", "Markup Drafting", "Plan Check Corrections", "CD Sets", "3D Coordination"],
     images: [carouselThree, steelThree, carouselOne],
+    imageFit: "contain",
   },
 ];
-

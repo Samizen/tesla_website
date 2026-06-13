@@ -376,11 +376,20 @@ export default function Home() {
           <p>Once We Establish Connection.</p>
         </div>
         <div className="process-flow" aria-label="Process overview">
-          {processSteps.map((step) => (
-            <article key={step.title} className={selectedProcess.title === step.title ? "active" : ""}>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
-            </article>
+          {processSteps.map((step, index) => (
+            <button
+              key={step.title}
+              className={selectedProcess.title === step.title ? "active" : ""}
+              type="button"
+              onClick={() => {
+                setSelectedStep(index);
+                setHasUsedProcess(true);
+              }}
+              aria-label={`Show ${step.title}`}
+            >
+              <span>{step.title}</span>
+              <small>{step.body}</small>
+            </button>
           ))}
         </div>
         <div className="gear-stage">

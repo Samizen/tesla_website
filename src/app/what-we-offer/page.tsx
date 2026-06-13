@@ -170,6 +170,7 @@ export default function WhatWeOfferPage() {
               <article className="offer-page-service" id={service.id} key={service.id}>
                 <div className="service-media">
                   <Image
+                    className={service.imageFit === "contain" ? "service-media-contain" : ""}
                     src={service.images[activeImage]}
                     alt={service.title}
                     loading="lazy"
