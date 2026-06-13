@@ -95,6 +95,7 @@ const chooseCards = [
 const offerSlides = offerServices.map((service) => ({
   image: service.images[0],
   caption: service.title,
+  href: `/what-we-offer#${service.id}`,
 }));
 
 const gearNumberAngles = [-90, -45, 0, 45, 90, 135];
@@ -532,9 +533,9 @@ export default function Home() {
             </button>
           </div>
         </div>
-        <div className="offer-carousel-caption" aria-live="polite">
+        <a className="offer-carousel-caption" href={offerSlides[activeOfferSlide].href} aria-live="polite">
           {offerSlides[activeOfferSlide].caption}
-        </div>
+        </a>
         <p>
           Although we have the capability to handle a wide range of projects, there are several areas where our team has expertise which we would like to highlight. We support teams with <strong>concrete podiums, wood residential and commercial units, steel structures, non-structural components, seismic retrofitting, construction administration, reinforced concrete block masonry, and structural drafting.</strong> You can trust that our team has the knowledge and experience necessary to deliver outstanding results that meet your specific needs.
         </p>
