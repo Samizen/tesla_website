@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { FormEvent } from "react";
+import type { CSSProperties, FormEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroBg from "../../assets/landing_page_background_image.jpg";
 import processFlowBg from "../../assets/process_flow_bg.svg";
@@ -427,7 +427,10 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="about-band" style={{ backgroundImage: `url(${whoBg.src})` }}>
+      <div
+        className="about-band"
+        style={{ "--about-bg": `url(${whoBg.src})` } as CSSProperties}
+      >
         <section
           id="about"
           className="who section-pad"

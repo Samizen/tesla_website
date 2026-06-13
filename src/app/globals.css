@@ -692,8 +692,6 @@ main {
   isolation: isolate;
   overflow: hidden;
   background-color: #fbfdff;
-  background-position: center top;
-  background-size: cover;
 }
 
 .about-band::before,
@@ -706,14 +704,21 @@ main {
 }
 
 .about-band::before {
+  opacity: 0.36;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.74) 48%, rgba(255, 255, 255, 0.9)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82) 48%, rgba(255, 255, 255, 0.94)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.78) 34%, rgba(255, 255, 255, 0.94)),
     radial-gradient(circle at 11% 23%, rgba(19, 165, 219, 0.12), transparent 27%),
-    radial-gradient(circle at 90% 72%, rgba(19, 165, 219, 0.1), transparent 28%);
+    radial-gradient(circle at 90% 72%, rgba(19, 165, 219, 0.1), transparent 28%),
+    var(--about-bg);
+  background-position: center, center, center, center, center, right 42% top -60px;
+  background-size: cover, cover, cover, cover, cover, min(1520px, 118vw) auto;
+  background-repeat: no-repeat;
+  filter: saturate(0.72) brightness(1.08);
 }
 
 .about-band::after {
-  opacity: 0.18;
+  opacity: 0.2;
   background:
     linear-gradient(24deg, transparent 0 13%, rgba(19, 165, 219, 0.42) 13.15% 13.32%, transparent 13.5% 100%),
     linear-gradient(24deg, transparent 0 18%, rgba(19, 165, 219, 0.34) 18.12% 18.28%, transparent 18.46% 100%),
@@ -1115,7 +1120,7 @@ main {
   position: relative;
   height: clamp(280px, 28vw, 420px);
   overflow: hidden;
-  background: var(--ice);
+  background: white;
 }
 
 .service-media img {
@@ -1766,7 +1771,18 @@ main {
 
   .offer-page-hero {
     min-height: 72svh;
-    padding: 72px 22px 52px;
+    align-items: start;
+    padding: 34px 22px 52px;
+  }
+
+  .offer-page-hero-copy {
+    width: min(100%, 520px);
+    margin-top: 28px;
+    padding: 18px 16px;
+    background: rgba(255, 255, 255, 0.66);
+    box-shadow: 0 18px 42px rgba(8, 63, 97, 0.16);
+    backdrop-filter: blur(13px);
+    text-shadow: none;
   }
 
   .offer-page-hero h1 {
