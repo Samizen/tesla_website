@@ -8,13 +8,11 @@ import processFlowBg from "../../assets/process_flow_bg.svg";
 import contactIllustration from "../../assets/contact_us_illustration.png";
 import logo from "../../assets/logos/Tesla_horizontal_svg.svg";
 import gear from "../../assets/tesla_gear.svg";
-import carouselOne from "../../assets/carousel_1.png";
-import carouselTwo from "../../assets/carousel_2.png";
-import carouselThree from "../../assets/carousel_3.png";
 import footerEmailIcon from "../../assets/footer_email_icon.svg";
 import footerTelegramIcon from "../../assets/footer_telegram_icon.svg";
 import footerWhatsappIcon from "../../assets/footer_whatsapp_icon.svg";
 import clickIcon from "../../assets/click_icon.svg";
+import { offerServices } from "./offer-data";
 
 const services = [
   {
@@ -92,20 +90,10 @@ const chooseCards = [
   },
 ];
 
-const offerSlides = [
-  {
-    image: carouselOne,
-    caption: "Lateral and Gravity analysis using ETABS",
-  },
-  {
-    image: carouselTwo,
-    caption: "Foundation Analysis and Design using SAFE",
-  },
-  {
-    image: carouselThree,
-    caption: "Sample calculations using WYSIWYG tools. MathCad in this instance.",
-  },
-];
+const offerSlides = offerServices.map((service) => ({
+  image: service.images[0],
+  caption: service.title,
+}));
 
 const gearNumberAngles = [-90, -45, 0, 45, 90, 135];
 
@@ -409,9 +397,15 @@ export default function Home() {
           ))}
         </div>
         <div className="service-images" aria-hidden="true">
-          <Image src={carouselOne} alt="" />
-          <Image src={carouselTwo} alt="" />
-          <Image src={carouselThree} alt="" />
+          {offerServices.slice(0, 3).map((service) => (
+            <Image
+              src={service.images[0]}
+              alt=""
+              key={service.id}
+              sizes="(max-width: 680px) 32vw, 18vw"
+              quality={60}
+            />
+          ))}
         </div>
       </section>
 
@@ -511,7 +505,14 @@ export default function Home() {
           <div className="offer-carousel-track">
             {offerSlides.map((slide, index) => {
               const offset = (index - activeOfferSlide + offerSlides.length) % offerSlides.length;
-              const position = offset === 0 ? "active" : offset === 1 ? "next" : "previous";
+              const position =
+                offset === 0
+                  ? "active"
+                  : offset === 1
+                    ? "next"
+                    : offset === offerSlides.length - 1
+                      ? "previous"
+                      : "hidden";
 
               return (
                 <button
@@ -521,7 +522,13 @@ export default function Home() {
                   onClick={() => openZoomedOfferSlide(index)}
                   aria-label={`Zoom image: ${slide.caption}`}
                 >
-                  <Image src={slide.image} alt={slide.caption} />
+                  <Image
+                    src={slide.image}
+                    alt={slide.caption}
+                    loading={index === activeOfferSlide ? "eager" : "lazy"}
+                    sizes="(max-width: 680px) 86vw, 62vw"
+                    quality={72}
+                  />
                   <span>{slide.caption}</span>
                 </button>
               );
@@ -548,7 +555,7 @@ export default function Home() {
           </div>
         </div>
         <p>
-          Although we have the capability to handle a wide range of projects, there are several areas where our team has expertise which we would like to highlight. We have successfully completed projects in <strong>lateral analysis and design of concrete podiums, tilt-up concrete, and lateral analysis and design of braced frame structures such as BRB and SCBF, including their connection designs.</strong> You can trust that our team has the knowledge and experience necessary to deliver outstanding results that meet your specific needs.
+          Although we have the capability to handle a wide range of projects, there are several areas where our team has expertise which we would like to highlight. We support teams with <strong>concrete podiums, wood residential and commercial units, steel structures, non-structural components, seismic retrofitting, construction administration, reinforced concrete block masonry, and structural drafting.</strong> You can trust that our team has the knowledge and experience necessary to deliver outstanding results that meet your specific needs.
         </p>
       </section>
 
@@ -585,6 +592,8 @@ export default function Home() {
               <Image
                 src={zoomedSlide.image}
                 alt={zoomedSlide.caption}
+                sizes="92vw"
+                quality={88}
                 style={{ transform: `scale(${zoomScale})` }}
               />
             </div>
