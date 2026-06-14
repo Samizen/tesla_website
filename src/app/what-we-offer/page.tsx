@@ -1,13 +1,14 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import type { FormEvent } from "react";
+import type { CSSProperties, FormEvent } from "react";
 import { useMemo, useState } from "react";
 import logo from "../../../assets/logos/Tesla_horizontal_svg.svg";
 import footerEmailIcon from "../../../assets/footer_email_icon.svg";
 import footerTelegramIcon from "../../../assets/footer_telegram_icon.svg";
 import footerWhatsappIcon from "../../../assets/footer_whatsapp_icon.svg";
 import contactIllustration from "../../../assets/contact_us_illustration.png";
+import processFlowBg from "../../../assets/process_flow_bg.svg";
 import heroImage from "../../../assets/what_we_offer_hero.png";
 import { offerServices, type OfferService } from "../offer-data";
 import { getSearchResults, searchItems, type SearchItem } from "../search-data";
@@ -177,7 +178,11 @@ export default function WhatWeOfferPage() {
         </div>
       </section>
 
-      <section className="offer-page-services" aria-label="Service navigation">
+      <section
+        className="offer-page-services"
+        aria-label="Service navigation"
+        style={{ "--offer-page-lines": `url(${processFlowBg.src})` } as CSSProperties}
+      >
         <div className="offer-page-service-nav">
           {offerServices.map((service) => (
             <a key={service.id} href={`#${service.id}`}>
