@@ -1254,9 +1254,29 @@ main {
   padding: clamp(12px, 1.5vw, 22px);
 }
 
-.service-media button {
+.service-media-zoom {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.service-media-zoom:focus-visible {
+  outline: 3px solid rgba(0, 129, 184, 0.7);
+  outline-offset: -8px;
+}
+
+.service-media-prev,
+.service-media-next {
   position: absolute;
   top: 50%;
+  z-index: 2;
   display: grid;
   width: clamp(34px, 3vw, 46px);
   height: clamp(34px, 3vw, 46px);
@@ -1272,8 +1292,10 @@ main {
   transition: background 180ms ease, transform 180ms ease;
 }
 
-.service-media button:hover,
-.service-media button:focus-visible {
+.service-media-prev:hover,
+.service-media-prev:focus-visible,
+.service-media-next:hover,
+.service-media-next:focus-visible {
   background: white;
   outline: 0;
   transform: translateY(-50%) scale(1.06);
@@ -1292,6 +1314,7 @@ main {
   right: 0;
   bottom: 14px;
   left: 0;
+  z-index: 2;
   display: flex;
   justify-content: center;
   gap: 7px;

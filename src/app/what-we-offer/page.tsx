@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import type { FormEvent } from "react";
 import { useMemo, useState } from "react";
 import logo from "../../../assets/logos/Tesla_horizontal_svg.svg";
@@ -9,13 +9,19 @@ import footerTelegramIcon from "../../../assets/footer_telegram_icon.svg";
 import footerWhatsappIcon from "../../../assets/footer_whatsapp_icon.svg";
 import contactIllustration from "../../../assets/contact_us_illustration.png";
 import heroImage from "../../../assets/what_we_offer_hero.png";
-import { offerServices } from "../offer-data";
+import { offerServices, type OfferService } from "../offer-data";
 import { getSearchResults, searchItems, type SearchItem } from "../search-data";
 
 export default function WhatWeOfferPage() {
   const [query, setQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeImages, setActiveImages] = useState<Record<string, number>>({});
+  const [zoomedServiceImage, setZoomedServiceImage] = useState<{
+    src: StaticImageData;
+    title: string;
+    fit?: "cover" | "contain";
+  } | null>(null);
+  const [zoomScale, setZoomScale] = useState(1);
 
   const filteredServices = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -80,6 +86,24 @@ export default function WhatWeOfferPage() {
       ...current,
       [serviceId]: ((current[serviceId] || 0) + direction + count) % count,
     }));
+  }
+
+  function openZoomedServiceImage(service: OfferService, imageIndex: number) {
+    setZoomScale(1);
+    setZoomedServiceImage({
+      src: service.images[imageIndex],
+      title: service.title,
+      fit: service.imageFit,
+    });
+  }
+
+  function closeZoomedServiceImage() {
+    setZoomedServiceImage(null);
+    setZoomScale(1);
+  }
+
+  function changeZoomScale(amount: number) {
+    setZoomScale((current) => Math.min(3, Math.max(1, Number((current + amount).toFixed(2)))));
   }
 
   return (
@@ -169,14 +193,21 @@ export default function WhatWeOfferPage() {
             return (
               <article className="offer-page-service" id={service.id} key={service.id}>
                 <div className="service-media">
-                  <Image
-                    className={service.imageFit === "contain" ? "service-media-contain" : ""}
-                    src={service.images[activeImage]}
-                    alt={service.title}
-                    loading="lazy"
-                    sizes="(max-width: 980px) 100vw, 50vw"
-                    quality={72}
-                  />
+                  <button
+                    className="service-media-zoom"
+                    type="button"
+                    onClick={() => openZoomedServiceImage(service, activeImage)}
+                    aria-label={`Zoom image for ${service.title}`}
+                  >
+                    <Image
+                      className={service.imageFit === "contain" ? "service-media-contain" : ""}
+                      src={service.images[activeImage]}
+                      alt={service.title}
+                      loading="lazy"
+                      sizes="(max-width: 980px) 100vw, 50vw"
+                      quality={72}
+                    />
+                  </button>
                   <button
                     className="service-media-prev"
                     type="button"
@@ -213,6 +244,40 @@ export default function WhatWeOfferPage() {
           })}
         </div>
       </section>
+
+      {zoomedServiceImage && (
+        <div className="image-zoom" role="dialog" aria-modal="true" aria-label={zoomedServiceImage.title}>
+          <button className="image-zoom-close" type="button" onClick={closeZoomedServiceImage} aria-label="Close zoomed image">
+            Close
+          </button>
+          <div className="image-zoom-controls" aria-label="Image zoom controls">
+            <button type="button" onClick={() => changeZoomScale(-0.25)} disabled={zoomScale <= 1}>
+              -
+            </button>
+            <span>{Math.round(zoomScale * 100)}%</span>
+            <button type="button" onClick={() => changeZoomScale(0.25)} disabled={zoomScale >= 3}>
+              +
+            </button>
+            <button type="button" onClick={() => setZoomScale(1)} disabled={zoomScale === 1}>
+              Reset
+            </button>
+          </div>
+          <button className="image-zoom-backdrop" type="button" onClick={closeZoomedServiceImage} aria-label="Close zoomed image" />
+          <figure>
+            <div className="image-zoom-frame">
+              <Image
+                className={zoomedServiceImage.fit === "contain" ? "service-media-contain" : ""}
+                src={zoomedServiceImage.src}
+                alt={zoomedServiceImage.title}
+                sizes="92vw"
+                quality={88}
+                style={{ transform: `scale(${zoomScale})` }}
+              />
+            </div>
+            <figcaption>{zoomedServiceImage.title}</figcaption>
+          </figure>
+        </div>
+      )}
 
       <section id="contact" className="contact section-pad" data-search>
         <div className="contact-panel">
