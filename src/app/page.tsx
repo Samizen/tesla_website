@@ -3,10 +3,10 @@
 import Image from "next/image";
 import type { CSSProperties, FormEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import heroBg from "../../assets/landing_page_background_image.jpg";
+import heroBg from "../../assets/optimized/site/landing-page-background.webp";
 import processFlowBg from "../../assets/process_flow_bg.svg";
-import whoBg from "../../assets/who_we_are_bg.png";
-import contactIllustration from "../../assets/contact_us_illustration.png";
+import whoBg from "../../assets/optimized/site/who-we-are-bg.webp";
+import contactIllustration from "../../assets/optimized/site/contact-us-illustration.webp";
 import logo from "../../assets/logos/Tesla_horizontal_svg.svg";
 import gear from "../../assets/tesla_gear.svg";
 import footerEmailIcon from "../../assets/footer_email_icon.svg";
@@ -604,7 +604,11 @@ export default function Home() {
             <button type="submit">Submit</button>
           </form>
           <div className="contact-copy">
-            <Image src={contactIllustration} alt="Structural engineering consultation illustration" />
+            <Image
+              src={contactIllustration}
+              alt="Structural engineering consultation illustration"
+              sizes="(max-width: 980px) 90vw, 34vw"
+            />
           </div>
         </div>
       </section>

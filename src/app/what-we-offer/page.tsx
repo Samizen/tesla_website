@@ -7,9 +7,9 @@ import logo from "../../../assets/logos/Tesla_horizontal_svg.svg";
 import footerEmailIcon from "../../../assets/footer_email_icon.svg";
 import footerTelegramIcon from "../../../assets/footer_telegram_icon.svg";
 import footerWhatsappIcon from "../../../assets/footer_whatsapp_icon.svg";
-import contactIllustration from "../../../assets/contact_us_illustration.png";
+import contactIllustration from "../../../assets/optimized/site/contact-us-illustration.webp";
 import processFlowBg from "../../../assets/process_flow_bg.svg";
-import heroImage from "../../../assets/what_we_offer_hero.png";
+import heroImage from "../../../assets/optimized/site/what-we-offer-hero.webp";
 import { offerServices, type OfferService } from "../offer-data";
 import { getSearchResults, searchItems, type SearchItem } from "../search-data";
 
@@ -308,7 +308,11 @@ export default function WhatWeOfferPage() {
             <button type="submit">Submit</button>
           </form>
           <div className="contact-copy">
-            <Image src={contactIllustration} alt="Structural engineering consultation illustration" />
+            <Image
+              src={contactIllustration}
+              alt="Structural engineering consultation illustration"
+              sizes="(max-width: 980px) 90vw, 34vw"
+            />
           </div>
         </div>
       </section>

@@ -36,6 +36,16 @@ assets/logos/Tesla_horizontal_svg_with devnagari_2.svg
 
 # Extra reference images not needed in the repo
 images_extra/
+assets/Photos/
+assets/Photos.rar
+assets/carousel_1.png
+assets/carousel_2.png
+assets/carousel_3.png
+assets/contact_us_illustration.png
+assets/landing_page_background_image.jpg
+assets/our_process_bg.png
+assets/what_we_offer_hero.png
+assets/who_we_are_bg.png
 
 # OS/editor noise
 .DS_Store
