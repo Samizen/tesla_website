@@ -111,7 +111,7 @@ export default function WhatWeOfferPage() {
     <main>
       <header className="site-header">
         <a className="brand" href="/#home" aria-label="Tesla Engineering home">
-          <Image src={logo} alt="Tesla Engineering" priority />
+          <Image src={logo} alt="Tesla Engineering" />
         </a>
         <nav aria-label="Primary navigation">
           <a href="/#home">Home</a>
@@ -166,6 +166,7 @@ export default function WhatWeOfferPage() {
           alt=""
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           quality={78}
         />

@@ -246,7 +246,7 @@ export default function Home() {
     <main>
       <header className="site-header">
         <a className="brand" href="#home" aria-label="Tesla Engineering home">
-          <Image src={logo} alt="Tesla Engineering" priority />
+          <Image src={logo} alt="Tesla Engineering" />
         </a>
         <nav aria-label="Primary navigation">
           <a className={activeSection === "home" ? "active" : ""} href="#home">Home</a>
@@ -298,8 +298,17 @@ export default function Home() {
         id="home"
         className="hero"
         data-search
-        style={{ backgroundImage: `url(${heroBg.src})` }}
       >
+        <Image
+          className="hero-bg"
+          src={heroBg}
+          alt=""
+          fill
+          priority
+          fetchPriority="high"
+          sizes="100vw"
+          quality={78}
+        />
         <div className="hero-copy">
           <p className="eyebrow">Looking for Remote</p>
           <h1>Structural Engineers?</h1>

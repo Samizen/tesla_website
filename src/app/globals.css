@@ -216,12 +216,20 @@ main {
   max-height: 1220px;
   margin-bottom: var(--hero-followup-height);
   padding: var(--header-height) clamp(22px, 7vw, 120px) 0;
+  overflow: hidden;
   background-position: center;
   background-size: cover;
 }
 
+.hero-bg {
+  z-index: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
 .hero-copy {
   position: absolute;
+  z-index: 1;
   left: clamp(22px, 7vw, 120px);
   bottom: 0;
   width: clamp(430px, 34vw, 660px);
@@ -284,6 +292,7 @@ main {
 
 .hero-bottom {
   position: absolute;
+  z-index: 1;
   top: 100%;
   left: 0;
   display: grid;
