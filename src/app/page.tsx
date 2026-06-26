@@ -553,32 +553,32 @@ export default function Home() {
       {zoomedSlide && (
         <div className="image-zoom" role="dialog" aria-modal="true" aria-label={zoomedSlide.caption}>
           <button
-            className="image-zoom-close"
-            type="button"
-            onClick={closeZoomedOfferSlide}
-            aria-label="Close zoomed image"
-          >
-            Close
-          </button>
-          <div className="image-zoom-controls" aria-label="Image zoom controls">
-            <button type="button" onClick={() => changeZoomScale(-0.25)} disabled={zoomScale <= 1}>
-              -
-            </button>
-            <span>{Math.round(zoomScale * 100)}%</span>
-            <button type="button" onClick={() => changeZoomScale(0.25)} disabled={zoomScale >= 3}>
-              +
-            </button>
-            <button type="button" onClick={() => setZoomScale(1)} disabled={zoomScale === 1}>
-              Reset
-            </button>
-          </div>
-          <button
             className="image-zoom-backdrop"
             type="button"
             onClick={closeZoomedOfferSlide}
             aria-label="Close zoomed image"
           />
           <figure>
+            <button
+              className="image-zoom-close"
+              type="button"
+              onClick={closeZoomedOfferSlide}
+              aria-label="Close zoomed image"
+            >
+              &times;
+            </button>
+            <div className="image-zoom-controls" aria-label="Image zoom controls">
+              <button type="button" onClick={() => changeZoomScale(-0.25)} disabled={zoomScale <= 1}>
+                -
+              </button>
+              <span>{Math.round(zoomScale * 100)}%</span>
+              <button type="button" onClick={() => changeZoomScale(0.25)} disabled={zoomScale >= 3}>
+                +
+              </button>
+              <button type="button" onClick={() => setZoomScale(1)} disabled={zoomScale === 1}>
+                Reset
+              </button>
+            </div>
             <div className="image-zoom-frame">
               <Image
                 src={zoomedSlide.image}
