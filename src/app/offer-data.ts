@@ -1,23 +1,28 @@
 import type { StaticImageData } from "next/image";
-import carouselOne from "../../assets/carousel_1.png";
-import carouselTwo from "../../assets/carousel_2.png";
-import carouselThree from "../../assets/carousel_3.png";
-import concreteOne from "../../images/Concrete Podium 1.png";
-import concreteTwo from "../../images/Concrete Podium 2.png";
-import concreteThree from "../../images/Concrete Podium 3.png";
-import concreteFour from "../../images/Concrete Podium 4.png";
-import concreteFive from "../../images/Concrete Podium 5.png";
-import retrofitOne from "../../images/Retrofit1.png";
-import retrofitTwo from "../../images/Retrofit2.png";
-import retrofitThree from "../../images/Retrofit3.png";
-import steelOne from "../../images/Steel1.png";
-import steelTwo from "../../images/Steel2.png";
-import steelThree from "../../images/Steel3.png";
-import steelFour from "../../images/Steel4.png";
-import woodOne from "../../images/Wood 1.png";
-import woodTwo from "../../images/Wood 2.png";
-import woodThree from "../../images/Wood 3.png";
-import woodFour from "../../images/Wood 4.png";
+import caOne from "../../assets/Photos/Complete CA Help/CA 1.jpeg";
+import cmuOne from "../../assets/Photos/Concrete Block Masonry/CMU 1.png";
+import cmuTwo from "../../assets/Photos/Concrete Block Masonry/CMU 2.png";
+import concreteOne from "../../assets/Photos/Concrete Podium/Concrete Podium 1.png";
+import concreteTwo from "../../assets/Photos/Concrete Podium/Concrete Podium 2.png";
+import concreteThree from "../../assets/Photos/Concrete Podium/Concrete Podium 3.png";
+import concreteFour from "../../assets/Photos/Concrete Podium/Concrete Podium 4.png";
+import concreteFive from "../../assets/Photos/Concrete Podium/Concrete Podium 5.png";
+import draftingOne from "../../assets/Photos/Drafting/Drafting1.png";
+import draftingTwo from "../../assets/Photos/Drafting/Drafting2.png";
+import nonStructuralOne from "../../assets/Photos/Non structural/NS 1.png";
+import nonStructuralTwo from "../../assets/Photos/Non structural/NS 2.jpeg";
+import nonStructuralThree from "../../assets/Photos/Non structural/NS 3.png";
+import retrofitOne from "../../assets/Photos/Retorfit/Retrofit1.png";
+import retrofitTwo from "../../assets/Photos/Retorfit/Retrofit2.png";
+import retrofitThree from "../../assets/Photos/Retorfit/Retrofit3.png";
+import steelOne from "../../assets/Photos/Steel/Steel1.png";
+import steelTwo from "../../assets/Photos/Steel/Steel2.png";
+import steelThree from "../../assets/Photos/Steel/Steel3.png";
+import steelFour from "../../assets/Photos/Steel/Steel4.png";
+import woodOne from "../../assets/Photos/Wood/Wood 1.png";
+import woodTwo from "../../assets/Photos/Wood/Wood 2.png";
+import woodThree from "../../assets/Photos/Wood/Wood 3.png";
+import woodFour from "../../assets/Photos/Wood/Wood 4.png";
 
 export type OfferService = {
   id: string;
@@ -55,7 +60,7 @@ export const offerServices: OfferService[] = [
     title: "Non-Structural Components",
     body: "Ensuring the seismic anchoring and bracing of electrical and mechanical equipment is critical for life-safety compliance. We provide anchorage calculations, bracing design, and coordination for HVAC units, electrical panels, piping, conduit, and other non-structural components per ASCE 7 and CBC requirements.",
     tags: ["HVAC Anchorage", "Electrical Panel Bracing", "ASCE 7 Chapter 13", "Seismic Anchorage", "MEP Coordination"],
-    images: [carouselTwo, steelTwo, carouselOne],
+    images: [nonStructuralOne, nonStructuralTwo, nonStructuralThree],
     imageFit: "contain",
   },
   {
@@ -70,7 +75,7 @@ export const offerServices: OfferService[] = [
     title: "Complete CA Help",
     body: "We support project teams throughout the construction administration phase, managing Submittals and Requests for Information (RFIs) with speed and precision. Our engineers review shop drawings, respond to field questions, issue supplemental instructions, and track documentation - keeping projects moving and protecting structural intent on-site.",
     tags: ["Submittal Review", "RFI Response", "Shop Drawing Review", "Field Support", "Construction Admin"],
-    images: [concreteFive, carouselTwo, carouselThree],
+    images: [caOne],
     imageFit: "contain",
   },
   {
@@ -78,14 +83,15 @@ export const offerServices: OfferService[] = [
     title: "Reinforced Concrete Block Masonry",
     body: "We design and detail reinforced concrete masonry unit (CMU) structures for commercial, industrial, and residential applications. Our scope includes shear wall design, out-of-plane flexural analysis, lintel and bond beam detailing, and full compliance with TMS 402/602 and CBC masonry provisions - delivering durable, cost-effective lateral and gravity systems.",
     tags: ["CMU Shear Walls", "TMS 402/602", "Lintel Design", "Bond Beams", "Out-of-Plane Analysis", "CBC Masonry"],
-    images: [concreteThree, concreteFour, concreteTwo],
+    images: [cmuOne, cmuTwo],
+    imageFit: "contain",
   },
   {
     id: "structural-drafting",
     title: "Structural Drafting",
     body: "Our drafting team produces high-quality structural drawings using BIM platforms and markup-based workflows. We create coordinated structural models in Revit, produce construction document sets, and perform markup-based drafting for plan check corrections and addenda. Deliverables are precise, buildable, and fully coordinated with architectural and MEP disciplines.",
     tags: ["Revit BIM", "Markup Drafting", "Plan Check Corrections", "CD Sets", "3D Coordination"],
-    images: [carouselThree, steelThree, carouselOne],
+    images: [draftingOne, draftingTwo],
     imageFit: "contain",
   },
 ];
