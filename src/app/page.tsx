@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { CSSProperties, FormEvent } from "react";
+import type { CSSProperties, FormEvent, WheelEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroBg from "../../assets/optimized/site/landing-page-background.webp";
 import processFlowBg from "../../assets/process_flow_bg.svg";
@@ -140,6 +140,11 @@ export default function Home() {
 
   function changeZoomScale(amount: number) {
     setZoomScale((current) => Math.min(3, Math.max(1, Number((current + amount).toFixed(1)))));
+  }
+
+  function zoomOfferSlideWithWheel(event: WheelEvent<HTMLDivElement>) {
+    event.preventDefault();
+    changeZoomScale(event.deltaY < 0 ? 0.16 : -0.16);
   }
 
   useEffect(() => {
@@ -567,19 +572,7 @@ export default function Home() {
             >
               &times;
             </button>
-            <div className="image-zoom-controls" aria-label="Image zoom controls">
-              <button type="button" onClick={() => changeZoomScale(-0.25)} disabled={zoomScale <= 1}>
-                -
-              </button>
-              <span>{Math.round(zoomScale * 100)}%</span>
-              <button type="button" onClick={() => changeZoomScale(0.25)} disabled={zoomScale >= 3}>
-                +
-              </button>
-              <button type="button" onClick={() => setZoomScale(1)} disabled={zoomScale === 1}>
-                Reset
-              </button>
-            </div>
-            <div className="image-zoom-frame">
+            <div className="image-zoom-frame" onWheel={zoomOfferSlideWithWheel}>
               <Image
                 src={zoomedSlide.image}
                 alt={zoomedSlide.caption}

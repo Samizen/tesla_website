@@ -1,7 +1,7 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import type { CSSProperties, FormEvent } from "react";
+import type { CSSProperties, FormEvent, WheelEvent } from "react";
 import { useMemo, useState } from "react";
 import logo from "../../../assets/logos/Tesla_horizontal_svg.svg";
 import footerEmailIcon from "../../../assets/footer_email_icon.svg";
@@ -105,6 +105,11 @@ export default function WhatWeOfferPage() {
 
   function changeZoomScale(amount: number) {
     setZoomScale((current) => Math.min(3, Math.max(1, Number((current + amount).toFixed(2)))));
+  }
+
+  function zoomServiceImageWithWheel(event: WheelEvent<HTMLDivElement>) {
+    event.preventDefault();
+    changeZoomScale(event.deltaY < 0 ? 0.16 : -0.16);
   }
 
   return (
@@ -258,19 +263,7 @@ export default function WhatWeOfferPage() {
             <button className="image-zoom-close" type="button" onClick={closeZoomedServiceImage} aria-label="Close zoomed image">
               &times;
             </button>
-            <div className="image-zoom-controls" aria-label="Image zoom controls">
-              <button type="button" onClick={() => changeZoomScale(-0.25)} disabled={zoomScale <= 1}>
-                -
-              </button>
-              <span>{Math.round(zoomScale * 100)}%</span>
-              <button type="button" onClick={() => changeZoomScale(0.25)} disabled={zoomScale >= 3}>
-                +
-              </button>
-              <button type="button" onClick={() => setZoomScale(1)} disabled={zoomScale === 1}>
-                Reset
-              </button>
-            </div>
-            <div className="image-zoom-frame">
+            <div className="image-zoom-frame" onWheel={zoomServiceImageWithWheel}>
               <Image
                 className={zoomedServiceImage.fit === "contain" ? "service-media-contain" : ""}
                 src={zoomedServiceImage.src}

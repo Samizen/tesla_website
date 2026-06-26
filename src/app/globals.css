@@ -216,7 +216,6 @@ main {
   max-height: 1220px;
   margin-bottom: var(--hero-followup-height);
   padding: var(--header-height) clamp(22px, 7vw, 120px) 0;
-  overflow: hidden;
   background-position: center;
   background-size: cover;
 }
@@ -1429,7 +1428,7 @@ main {
   z-index: 100;
   display: grid;
   place-items: center;
-  padding: clamp(14px, 3vw, 44px);
+  padding: clamp(16px, 4vw, 58px);
 }
 
 .image-zoom-backdrop {
@@ -1437,9 +1436,9 @@ main {
   inset: 0;
   border: 0;
   background:
-    linear-gradient(rgba(5, 28, 45, 0.74), rgba(5, 28, 45, 0.74)),
-    radial-gradient(circle at 24% 18%, rgba(19, 165, 219, 0.24), transparent 34%),
-    radial-gradient(circle at 82% 72%, rgba(19, 165, 219, 0.18), transparent 36%);
+    linear-gradient(rgba(5, 45, 72, 0.84), rgba(5, 45, 72, 0.84)),
+    radial-gradient(circle at 22% 16%, rgba(19, 165, 219, 0.42), transparent 34%),
+    radial-gradient(circle at 82% 74%, rgba(19, 165, 219, 0.32), transparent 38%);
   cursor: zoom-out;
 }
 
@@ -1447,105 +1446,67 @@ main {
   position: relative;
   z-index: 1;
   display: grid;
-  width: min(1080px, calc(100vw - 32px));
-  max-height: calc(100svh - 32px);
-  gap: 14px;
+  width: min(1280px, calc(100vw - 36px));
+  max-height: calc(100svh - 36px);
+  gap: 16px;
   margin: 0;
-  padding: clamp(44px, 4vw, 58px) clamp(12px, 1.8vw, 22px) clamp(14px, 1.8vw, 22px);
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .image-zoom-frame {
   display: grid;
-  max-height: min(72vh, 760px);
+  max-height: min(78vh, 820px);
   overflow: auto;
   place-items: center;
-  background: #f8fdff;
-  border: 1px solid rgba(8, 63, 97, 0.1);
+  background: transparent;
+  cursor: zoom-in;
 }
 
 .image-zoom-frame img {
   display: block;
   width: auto;
   max-width: 100%;
-  max-height: min(72vh, 760px);
+  max-height: min(78vh, 820px);
   height: auto;
   object-fit: contain;
   transform-origin: center center;
   transition: transform 180ms ease;
+  box-shadow: 0 26px 72px rgba(0, 0, 0, 0.28);
 }
 
 .image-zoom figcaption {
   padding: 0 16px;
-  color: var(--ink);
+  color: white;
   font-size: clamp(16px, 1.3vw, 22px);
   font-weight: 800;
   text-align: center;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
 }
 
 .image-zoom-close {
-  position: absolute;
-  top: 12px;
-  right: 14px;
+  position: fixed;
+  top: 22px;
+  right: 24px;
   z-index: 2;
   border: 0;
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
   padding: 0;
   background: transparent;
-  color: var(--ink);
-  font-size: 30px;
+  color: white;
+  font-size: 36px;
   font-weight: 400;
   line-height: 1;
   cursor: pointer;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
 .image-zoom-close:hover,
 .image-zoom-close:focus-visible {
-  color: var(--sky-deep);
+  color: var(--ice);
   outline: 0;
-}
-
-.image-zoom-controls {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0;
-  background: transparent;
-}
-
-.image-zoom-controls button,
-.image-zoom-controls span {
-  min-width: 34px;
-  border: 0;
-  padding: 8px 10px;
-  background: var(--ink);
-  color: white;
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1;
-  text-align: center;
-}
-
-.image-zoom-controls button {
-  cursor: pointer;
-}
-
-.image-zoom-controls button:disabled {
-  cursor: not-allowed;
-  opacity: 0.38;
-}
-
-.image-zoom-controls span {
-  min-width: 62px;
-  background: var(--ice);
-  color: var(--ink);
 }
 
 .contact {
@@ -2058,26 +2019,19 @@ main {
   }
 
   .image-zoom-close {
-    top: 8px;
-    right: 8px;
-  }
-
-  .image-zoom-controls {
-    top: 10px;
-    left: 10px;
-    max-width: calc(100vw - 24px);
-    flex-wrap: wrap;
+    top: 12px;
+    right: 12px;
   }
 
   .image-zoom figure {
     width: calc(100vw - 22px);
     max-height: calc(100svh - 22px);
-    padding: 48px 10px 14px;
+    padding: 0;
   }
 
   .image-zoom-frame,
   .image-zoom-frame img {
-    max-height: 66vh;
+    max-height: 72vh;
   }
 
   .footer {
