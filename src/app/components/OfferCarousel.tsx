@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { WheelEvent } from "react";
 import { useState } from "react";
 import { offerSlides } from "../home-data";
+import { ImageZoomDialog } from "./ImageZoomDialog";
 
 export function OfferCarousel() {
   const [activeOfferSlide, setActiveOfferSlide] = useState(0);
@@ -99,34 +100,14 @@ export function OfferCarousel() {
       </div>
 
       {zoomedSlide && (
-        <div className="image-zoom" role="dialog" aria-modal="true" aria-label={zoomedSlide.caption}>
-          <button
-            className="image-zoom-backdrop"
-            type="button"
-            onClick={closeZoomedOfferSlide}
-            aria-label="Close zoomed image"
-          />
-          <figure>
-            <button
-              className="image-zoom-close"
-              type="button"
-              onClick={closeZoomedOfferSlide}
-              aria-label="Close zoomed image"
-            >
-              &times;
-            </button>
-            <div className="image-zoom-frame" onWheel={zoomOfferSlideWithWheel}>
-              <Image
-                src={zoomedSlide.image}
-                alt={zoomedSlide.caption}
-                sizes="92vw"
-                quality={88}
-                style={{ transform: `scale(${zoomScale})` }}
-              />
-            </div>
-            <figcaption>{zoomedSlide.caption}</figcaption>
-          </figure>
-        </div>
+        <ImageZoomDialog
+          image={zoomedSlide.image}
+          alt={zoomedSlide.caption}
+          caption={zoomedSlide.caption}
+          scale={zoomScale}
+          onWheel={zoomOfferSlideWithWheel}
+          onClose={closeZoomedOfferSlide}
+        />
       )}
     </>
   );

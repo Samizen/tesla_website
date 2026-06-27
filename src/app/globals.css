@@ -1425,7 +1425,7 @@ main {
 .image-zoom {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 2147483647;
   display: grid;
   place-items: center;
   padding: clamp(16px, 4vw, 58px);

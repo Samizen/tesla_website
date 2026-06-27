@@ -3,6 +3,7 @@
 import Image, { type StaticImageData } from "next/image";
 import type { WheelEvent } from "react";
 import { useState } from "react";
+import { ImageZoomDialog } from "./ImageZoomDialog";
 
 type ServiceMediaCarouselProps = {
   title: string;
@@ -65,25 +66,15 @@ export function ServiceMediaCarousel({ title, images, imageFit }: ServiceMediaCa
       </div>
 
       {zoomedImage && (
-        <div className="image-zoom" role="dialog" aria-modal="true" aria-label={title}>
-          <button className="image-zoom-backdrop" type="button" onClick={closeZoomedImage} aria-label="Close zoomed image" />
-          <figure>
-            <button className="image-zoom-close" type="button" onClick={closeZoomedImage} aria-label="Close zoomed image">
-              &times;
-            </button>
-            <div className="image-zoom-frame" onWheel={zoomImageWithWheel}>
-              <Image
-                className={imageFit === "contain" ? "service-media-contain" : ""}
-                src={zoomedImage}
-                alt={title}
-                sizes="92vw"
-                quality={88}
-                style={{ transform: `scale(${zoomScale})` }}
-              />
-            </div>
-            <figcaption>{title}</figcaption>
-          </figure>
-        </div>
+        <ImageZoomDialog
+          image={zoomedImage}
+          alt={title}
+          caption={title}
+          imageClassName={imageFit === "contain" ? "service-media-contain" : ""}
+          scale={zoomScale}
+          onWheel={zoomImageWithWheel}
+          onClose={closeZoomedImage}
+        />
       )}
     </>
   );
