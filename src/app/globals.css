@@ -1458,10 +1458,16 @@ main {
 .image-zoom-frame {
   display: grid;
   max-height: min(78vh, 820px);
-  overflow: auto;
+  overflow: hidden;
   place-items: center;
   background: transparent;
-  cursor: zoom-in;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.image-zoom-frame.dragging {
+  cursor: grabbing;
 }
 
 .image-zoom-frame img {
@@ -1472,8 +1478,13 @@ main {
   height: auto;
   object-fit: contain;
   transform-origin: center center;
-  transition: transform 180ms ease;
+  transition: transform 140ms ease;
   box-shadow: 0 26px 72px rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+}
+
+.image-zoom-frame.dragging img {
+  transition: none;
 }
 
 .image-zoom figcaption {
