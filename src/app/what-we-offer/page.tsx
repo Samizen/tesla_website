@@ -1,170 +1,23 @@
-"use client";
-
-import Image, { type StaticImageData } from "next/image";
-import type { CSSProperties, FormEvent, WheelEvent } from "react";
-import { useMemo, useState } from "react";
-import logo from "../../../assets/logos/Tesla_horizontal_svg.svg";
+import Image from "next/image";
+import type { CSSProperties } from "react";
 import footerEmailIcon from "../../../assets/footer_email_icon.svg";
 import footerTelegramIcon from "../../../assets/footer_telegram_icon.svg";
 import footerWhatsappIcon from "../../../assets/footer_whatsapp_icon.svg";
+import logo from "../../../assets/logos/Tesla_horizontal_svg.svg";
 import contactIllustration from "../../../assets/optimized/site/contact-us-illustration.webp";
-import processFlowBg from "../../../assets/process_flow_bg.svg";
 import heroImage from "../../../assets/optimized/site/what-we-offer-hero.webp";
-import { offerServices, type OfferService } from "../offer-data";
-import { getSearchResults, searchItems, type SearchItem } from "../search-data";
+import processFlowBg from "../../../assets/process_flow_bg.svg";
+import { ContactForm } from "../components/ContactForm";
+import { ServiceMediaCarousel } from "../components/ServiceMediaCarousel";
+import { SiteHeader } from "../components/SiteHeader";
+import { offerServices } from "../offer-data";
 
 export default function WhatWeOfferPage() {
-  const [query, setQuery] = useState("");
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [activeImages, setActiveImages] = useState<Record<string, number>>({});
-  const [zoomedServiceImage, setZoomedServiceImage] = useState<{
-    src: StaticImageData;
-    title: string;
-    fit?: "cover" | "contain";
-  } | null>(null);
-  const [zoomScale, setZoomScale] = useState(1);
-
-  const filteredServices = useMemo(() => {
-    const needle = query.trim().toLowerCase();
-    if (!needle) return offerServices;
-
-    return offerServices.filter((service) =>
-      `${service.title} ${service.body} ${service.tags.join(" ")}`.toLowerCase().includes(needle),
-    );
-  }, [query]);
-
-  const searchResults = useMemo(() => getSearchResults(query), [query]);
-
-  function submitContact(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") || "");
-    const email = String(data.get("email") || "");
-    const company = String(data.get("company") || "");
-    const message = String(data.get("message") || "");
-    const subject = encodeURIComponent(`What We Offer Inquiry from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\n${message}`);
-    window.location.href = `mailto:info@teslaengineering.com.np?subject=${subject}&body=${body}`;
-  }
-
-  function scrollToSearchItem(item: SearchItem) {
-    const currentPath = window.location.pathname;
-
-    if (item.href.startsWith("/#") || !item.href.startsWith("/what-we-offer")) {
-      window.location.href = item.href;
-      return;
-    }
-
-    if (currentPath !== "/what-we-offer") {
-      window.location.href = item.href;
-      return;
-    }
-
-    const hash = item.href.split("#")[1];
-    const match = hash ? document.getElementById(hash) : document.querySelector(".offer-page-hero");
-
-    document.querySelectorAll(".search-hit").forEach((node) => node.classList.remove("search-hit"));
-    window.getSelection()?.removeAllRanges();
-
-    if (match instanceof HTMLElement) {
-      match.classList.add("search-hit");
-      const rect = match.getBoundingClientRect();
-      const top = rect.top + window.scrollY - window.innerHeight * 0.18;
-      window.scrollTo({ top, behavior: "smooth" });
-      setIsSearchOpen(false);
-      window.setTimeout(() => match.classList.remove("search-hit"), 2200);
-    }
-  }
-
-  function runSearch(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const target = searchResults[0] || searchItems.find((item) => item.href === "/what-we-offer") || searchItems[0];
-    scrollToSearchItem(target);
-  }
-
-  function moveImage(serviceId: string, count: number, direction: number) {
-    setActiveImages((current) => ({
-      ...current,
-      [serviceId]: ((current[serviceId] || 0) + direction + count) % count,
-    }));
-  }
-
-  function openZoomedServiceImage(service: OfferService, imageIndex: number) {
-    setZoomScale(1);
-    setZoomedServiceImage({
-      src: service.images[imageIndex],
-      title: service.title,
-      fit: service.imageFit,
-    });
-  }
-
-  function closeZoomedServiceImage() {
-    setZoomedServiceImage(null);
-    setZoomScale(1);
-  }
-
-  function changeZoomScale(amount: number) {
-    setZoomScale((current) => Math.min(3, Math.max(1, Number((current + amount).toFixed(2)))));
-  }
-
-  function zoomServiceImageWithWheel(event: WheelEvent<HTMLDivElement>) {
-    event.preventDefault();
-    changeZoomScale(event.deltaY < 0 ? 0.16 : -0.16);
-  }
-
   return (
     <main>
-      <header className="site-header">
-        <a className="brand" href="/#home" aria-label="Tesla Engineering home">
-          <Image src={logo} alt="Tesla Engineering" />
-        </a>
-        <nav aria-label="Primary navigation">
-          <a href="/#home">Home</a>
-          <a className="active" href="/what-we-offer">What We Offer</a>
-          <a href="/#about">About Us</a>
-          <a href="/#contact">Contact</a>
-        </nav>
-        <form className="search" onSubmit={runSearch} role="search">
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value);
-              setIsSearchOpen(true);
-            }}
-            onFocus={() => setIsSearchOpen(true)}
-            onBlur={() => window.setTimeout(() => setIsSearchOpen(false), 140)}
-            placeholder="Search"
-            aria-label="Find content on this page"
-            aria-expanded={isSearchOpen && query.trim().length > 0}
-            aria-controls="offer-search-results"
-          />
-          <button type="submit" aria-label="Search page">
-            <span>Go</span>
-          </button>
-          {isSearchOpen && query.trim().length > 0 && (
-            <div className="search-results" id="offer-search-results">
-              {searchResults.length > 0 ? (
-                searchResults.map((item) => (
-                  <button
-                    key={item.href}
-                    type="button"
-                    onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => scrollToSearchItem(item)}
-                  >
-                    <strong>{item.title}</strong>
-                    <span>{item.snippet}</span>
-                  </button>
-                ))
-              ) : (
-                <p>No matching section</p>
-              )}
-            </div>
-          )}
-        </form>
-      </header>
+      <SiteHeader page="offer" />
 
-      <section className="offer-page-hero">
+      <section className="offer-page-hero" id="offer-page-top">
         <Image
           className="offer-page-hero-image"
           src={heroImage}
@@ -198,109 +51,26 @@ export default function WhatWeOfferPage() {
         </div>
 
         <div className="offer-page-service-list">
-          {filteredServices.map((service) => {
-            const activeImage = activeImages[service.id] || 0;
-
-            return (
-              <article className="offer-page-service" id={service.id} key={service.id}>
-                <div className="service-media">
-                  <button
-                    className="service-media-zoom"
-                    type="button"
-                    onClick={() => openZoomedServiceImage(service, activeImage)}
-                    aria-label={`Zoom image for ${service.title}`}
-                  >
-                    <Image
-                      className={service.imageFit === "contain" ? "service-media-contain" : ""}
-                      src={service.images[activeImage]}
-                      alt={service.title}
-                      loading="lazy"
-                      sizes="(max-width: 980px) 100vw, 50vw"
-                      quality={72}
-                    />
-                  </button>
-                  <button
-                    className="service-media-prev"
-                    type="button"
-                    onClick={() => moveImage(service.id, service.images.length, -1)}
-                    aria-label={`Previous image for ${service.title}`}
-                  >
-                    &lt;
-                  </button>
-                  <button
-                    className="service-media-next"
-                    type="button"
-                    onClick={() => moveImage(service.id, service.images.length, 1)}
-                    aria-label={`Next image for ${service.title}`}
-                  >
-                    &gt;
-                  </button>
-                  <div className="service-media-dots" aria-hidden="true">
-                    {service.images.map((image, index) => (
-                      <span className={activeImage === index ? "active" : ""} key={`${service.id}-${index}-${image.src}`} />
-                    ))}
-                  </div>
-                </div>
-                <div className="service-detail">
-                  <h2>{service.title}</h2>
-                  <p>{service.body}</p>
-                  <ul>
-                    {service.tags.map((tag) => (
-                      <li key={tag}>{tag}</li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            );
-          })}
+          {offerServices.map((service) => (
+            <article className="offer-page-service" id={service.id} key={service.id}>
+              <ServiceMediaCarousel title={service.title} images={service.images} imageFit={service.imageFit} />
+              <div className="service-detail">
+                <h2>{service.title}</h2>
+                <p>{service.body}</p>
+                <ul>
+                  {service.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      {zoomedServiceImage && (
-        <div className="image-zoom" role="dialog" aria-modal="true" aria-label={zoomedServiceImage.title}>
-          <button className="image-zoom-backdrop" type="button" onClick={closeZoomedServiceImage} aria-label="Close zoomed image" />
-          <figure>
-            <button className="image-zoom-close" type="button" onClick={closeZoomedServiceImage} aria-label="Close zoomed image">
-              &times;
-            </button>
-            <div className="image-zoom-frame" onWheel={zoomServiceImageWithWheel}>
-              <Image
-                className={zoomedServiceImage.fit === "contain" ? "service-media-contain" : ""}
-                src={zoomedServiceImage.src}
-                alt={zoomedServiceImage.title}
-                sizes="92vw"
-                quality={88}
-                style={{ transform: `scale(${zoomScale})` }}
-              />
-            </div>
-            <figcaption>{zoomedServiceImage.title}</figcaption>
-          </figure>
-        </div>
-      )}
-
       <section id="contact" className="contact section-pad" data-search>
         <div className="contact-panel">
-          <form className="contact-form" onSubmit={submitContact}>
-            <h2>Contact Us</h2>
-            <p>We&apos;d love to hear from you.</p>
-            <label>
-              <span>Name</span>
-              <input name="name" type="text" required />
-            </label>
-            <label>
-              <span>Email</span>
-              <input name="email" type="email" required />
-            </label>
-            <label>
-              <span>Your Company</span>
-              <input name="company" type="text" />
-            </label>
-            <label>
-              <span>Your Message</span>
-              <textarea name="message" rows={6} required />
-            </label>
-            <button type="submit">Submit</button>
-          </form>
+          <ContactForm mode="offer" />
           <div className="contact-copy">
             <Image
               src={contactIllustration}
